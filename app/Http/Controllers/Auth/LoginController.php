@@ -43,7 +43,7 @@ class LoginController extends Controller
     /**
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function apiLogin(\Illuminate\Http\Request $request): mixed
+    public function apiLogin(\Illuminate\Http\Request $request): \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
     {
         if ($request->has("api_key")) {
             $user = ApiToken::userFromToken($request->post("api_key"));

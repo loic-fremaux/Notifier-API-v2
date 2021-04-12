@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiNotificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FirebaseController;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,11 +27,14 @@ Route::middleware(["api"])->group(function () {
         return (new FirebaseController())->registerDevice($request);
     })->name("api.register");
 
+    Route::post("update-device", function (Request $request) {
+        return (new FirebaseController())->updateDevice($request);
+    })->name("api.update");
 });
 
 Route::middleware(["web"])->group(function () {
     Route::post('login', function (Request $request) {
         return (new LoginController())->apiLogin($request);
     })->name('api.login')
-        ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+        ->withoutMiddleware(VerifyCsrfToken::class);
 });

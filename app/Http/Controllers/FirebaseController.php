@@ -51,7 +51,26 @@ class FirebaseController extends Controller
 
         return response([
             "message" => "device successfully registered",
-            "api_token" => $key->token,
+        ], 200);
+    }
+
+    public function updateDevice(Request $request): Response|Application|ResponseFactory
+    {
+        $key = FirebaseKey::query()
+            ->where("user_id", Auth::id())
+            ->where("device_uuid", $request->device_uuid)
+            ->first();
+
+        if ($key === null) return response([
+            "message" => "key not found",
+        ], 404);
+
+        $key->key = $request->key;
+        $key->save();
+        $key->refresh();
+
+        return response([
+            "message" => "device successfully updated",
         ], 200);
     }
 }
