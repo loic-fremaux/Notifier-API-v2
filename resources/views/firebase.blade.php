@@ -25,7 +25,7 @@
                     {{ $key->id }}
                 </td>
                 <td>
-                    {{ $key->phone }}
+                    {{ $key->device_name }}
                 </td>
                 <td>
                     <div class="badge badge-secondary text-monospace">{{ $key->key }}</div>
