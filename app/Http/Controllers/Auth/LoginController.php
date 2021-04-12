@@ -54,7 +54,7 @@ class LoginController extends Controller
                 ], 403);
             }
 
-            Auth::loginUsingId($user->id);
+            Auth::guard()->login($user, true);
             return redirect("profile");
         } else {
             return $this->login($request);
