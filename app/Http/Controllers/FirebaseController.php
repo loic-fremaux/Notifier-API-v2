@@ -44,7 +44,7 @@ class FirebaseController extends Controller
 
         $key->token = Str::random(128);
         $key->user_id = Auth::id();
-        $key->usage = trans("app.phone") . $request->device_name;
+        $key->usage = trans("app.phone") . ' ' . $request->device_name;
 
         $key->save();
         $key->refresh();
