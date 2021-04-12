@@ -18,8 +18,15 @@ class ApiAuthMiddleware
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        $user = ApiToken::userFromToken($request->post("api_key"));
-        if ($user === null) {
+        if ($request->has("api_token")) {
+            $user = ApiToken::userFromToken($request->post("api_key"));
+
+            if ($user === null) {
+                return response([
+                    "message" => "access denied",
+                ], 403);
+            }
+        } else {
             Auth::once([
                 "email" => $request->post("email"),
                 "password" => $request->post("password"),
@@ -30,10 +37,6 @@ class ApiAuthMiddleware
                     "message" => "wrong credentials"
                 ], 403);
             }
-
-            return response([
-                "message" => "access denied",
-            ], 403);
         }
 
         Auth::onceUsingId($user->id);
