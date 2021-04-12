@@ -51,6 +51,7 @@ class FirebaseController extends Controller
 
         return response([
             "message" => "device successfully registered",
+            "api_token" => $key->token,
         ], 200);
     }
 
@@ -71,6 +72,7 @@ class FirebaseController extends Controller
 
         return response([
             "message" => "device successfully updated",
+            "api_token" => $key->token,
         ], 200);
     }
 }
