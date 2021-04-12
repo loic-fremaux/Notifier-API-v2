@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApiToken;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,26 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function apiLogin(\Illuminate\Http\Request $request): mixed
+    {
+        if ($request->has("api_token")) {
+            $user = ApiToken::userFromToken($request->post("api_key"));
+
+            if ($user === null) {
+                return response([
+                    "message" => "access denied",
+                ], 403);
+            }
+
+            Auth::loginUsingId($user->id);
+            return redirect("home");
+        } else {
+            return $this->login($request);
+        }
     }
 }

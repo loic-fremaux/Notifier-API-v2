@@ -23,7 +23,7 @@ Route::middleware(["api"])->group(function () {
     })->name('api.push');
 
     Route::post('login', function (Request $request) {
-        return (new LoginController())->login($request);
+        return (new LoginController())->apiLogin($request);
     })->name('api.login');
 
     Route::post("register-device", function (Request $request) {
