@@ -31,5 +31,6 @@ Route::middleware(["api"])->group(function () {
 Route::middleware(["web"])->group(function () {
     Route::post('login', function (Request $request) {
         return (new LoginController())->apiLogin($request);
-    })->name('api.login');
+    })->name('api.login')
+        ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
 });
