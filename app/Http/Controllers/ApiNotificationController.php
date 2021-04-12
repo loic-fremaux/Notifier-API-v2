@@ -55,8 +55,10 @@ class ApiNotificationController extends Controller
     public function sendPush($users, Request $request)
     {
         $data = [
-            "registration_ids" => $users->map(function ($key) {
-                return $key->token;
+            "registration_ids" => $users->map(function ($user) {
+                return $user->firebaseKeys()->map(function ($key) {
+                    return $key;
+                });
             }),
             "notification" =>
                 [
@@ -83,6 +85,7 @@ class ApiNotificationController extends Controller
         return response()->json([
             'status' => 'Notification sent !',
             'returned' => curl_exec($ch),
+            'data' => $data,
         ], 200);
 
     }
