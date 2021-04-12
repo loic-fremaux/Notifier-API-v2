@@ -18,7 +18,7 @@ class ApiAuthMiddleware
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        if ($request->has("api_token")) {
+        if ($request->has("api_key")) {
             $user = ApiToken::userFromToken($request->post("api_key"));
 
             if ($user === null) {
