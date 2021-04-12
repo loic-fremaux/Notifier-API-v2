@@ -55,11 +55,11 @@ class ApiNotificationController extends Controller
     public function sendPush($users, Request $request)
     {
         $data = [
-            "registration_ids" => $users->map(function ($user) {
+            "registration_ids" => array_merge($users->map(function ($user) {
                 return $user->firebaseKeys()->get()->map(function ($key) {
                     return $key->key;
                 });
-            }),
+            })),
             "notification" =>
                 [
                     "title" => $request->input('title'),
