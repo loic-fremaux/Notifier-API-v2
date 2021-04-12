@@ -43,10 +43,15 @@ class ApiToken extends Model
         if ($token === null) {
             return null;
         }
-        $user_id = ApiToken::query()
+        $res = ApiToken::query()
             ->where("token", $token)
             ->get("user_id")
-            ->first()['user_id'];
-        return User::fromId($user_id);
+            ->first();
+
+        if ($res === null) {
+            return null;
+        }
+
+        return User::fromId($res['user_id']);
     }
 }
