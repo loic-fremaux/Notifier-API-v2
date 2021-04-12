@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -20,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'api_token',
     ];
 
     /**
@@ -40,4 +42,37 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function generateToken()
+    {
+        $this->api_token = Str::random(60);
+        $this->save();
+
+        return $this->api_token;
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany('App\Models\Service', 'service_members', 'user_id', 'service_id');
+    }
+
+    public function apiTokens()
+    {
+        return $this->hasMany(ApiToken::class);
+    }
+
+    public function firebaseKeys()
+    {
+        return $this->hasMany(FirebaseKey::class);
+    }
+
+    public static function fromName($username): ?User
+    {
+        return User::where('name', $username)->first();
+    }
+
+    public static function fromId($input)
+    {
+        return User::where('id', $input)->first();
+    }
 }
