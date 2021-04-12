@@ -56,7 +56,9 @@ class ApiNotificationController extends Controller
     {
         $data = [
             "registration_ids" => $users->map(function ($user) {
-                return $user->firebaseKeys()->get();
+                return $user->firebaseKeys()->get()->map(function ($key) {
+                    return $key->key;
+                });
             }),
             "notification" =>
                 [
