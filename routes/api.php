@@ -22,13 +22,12 @@ Route::middleware(["api"])->group(function () {
         return (new ApiNotificationController())->push($request);
     })->name('api.push');
 
-    Route::post('login', function (Request $request) {
-        return (new LoginController())->apiLogin($request);
-    })->name('api.login');
-
     Route::post("register-device", function (Request $request) {
         return (new FirebaseController())->registerDevice($request);
     })->name("api.register");
 
 });
 
+Route::post('login', function (Request $request) {
+    return (new LoginController())->apiLogin($request);
+})->name('api.login');
