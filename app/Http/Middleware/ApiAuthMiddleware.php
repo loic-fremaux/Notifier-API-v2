@@ -39,6 +39,7 @@ class ApiAuthMiddleware
                     "message" => "wrong credentials",
                     "email" => $request->post("email"),
                     "password" => $request->post("password"),
+                    "api_key" => $request->post("api_key"),
                 ], 403);
             }
         }
