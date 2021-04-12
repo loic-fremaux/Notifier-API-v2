@@ -28,7 +28,8 @@
                     {{ $key->device_name }}
                 </td>
                 <td>
-                    <div class="badge badge-secondary text-monospace">{{ $key->key }}</div>
+                    <div class="badge badge-primary text-truncate d-inline-block text-monospace"
+                         style="max-width: 180px;">{{ $key->key }}</div>
                 </td>
                 <td>
                     @include('services.modules.modal', [

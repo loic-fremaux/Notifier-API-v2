@@ -25,7 +25,8 @@
                     {{ $token->id }}
                 </td>
                 <td>
-                    <div class="text-monospace">{{ $token->token }}</div>
+                    <div class="badge badge-primary text-truncate d-inline-block text-monospace"
+                         style="max-width: 180px;">{{ $token->token }}</div>
                 </td>
                 <td>
                     <div class="text-monospace">{{ $token->usage }}</div>
