@@ -55,7 +55,9 @@ class LoginController extends Controller
             }
 
             Auth::guard()->login($user, true);
-            return redirect("profile");
+            return response([
+                "message" => "logged as " . $user
+            ]);
         } else {
             return $this->login($request);
         }
