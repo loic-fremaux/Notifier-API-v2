@@ -34,7 +34,9 @@ class ApiAuthMiddleware
 
             if (Auth::guest()) {
                 return response([
-                    "message" => "wrong credentials"
+                    "message" => "wrong credentials",
+                    "email" => $request->post("email"),
+                    "password" => $request->post("password"),
                 ], 403);
             }
         }
