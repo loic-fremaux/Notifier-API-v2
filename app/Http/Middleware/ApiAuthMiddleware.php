@@ -26,6 +26,8 @@ class ApiAuthMiddleware
                     "message" => "access denied",
                 ], 403);
             }
+
+            Auth::onceUsingId($user->id);
         } else {
             Auth::once([
                 "email" => $request->post("email"),
@@ -40,8 +42,6 @@ class ApiAuthMiddleware
                 ], 403);
             }
         }
-
-        Auth::onceUsingId($user->id);
 
         return $next($request);
     }
