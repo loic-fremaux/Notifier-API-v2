@@ -24,12 +24,19 @@ class FirebaseKey extends Model
     {
         $userId = Auth::id();
 
-        $key = new FirebaseKey();
+        $key = FirebaseKey::query()
+            ->where("user_id", $userId)
+            ->where("device_uuid", $request->device_uuid)
+            ->first();
 
-        $key->key = $request->firebase_key;
+        if ($key === null) {
+            $key = new FirebaseKey();
+        }
+
+        $key->key = $request->has("firebase_key") ? $request->firebase_key : $key->key;
         $key->user_id = $userId;
-        $key->device_name = $request->device_name;
-        $key->device_uuid = $request->device_uuid;
+        $key->device_name = $request->has("device_name") ? $request->device_name : $key->device_name;
+        $key->device_uuid = $request->has("device_uuid") ? $request->device_uuid : $key->device_uuid;
 
         $key->save();
         $key->refresh();

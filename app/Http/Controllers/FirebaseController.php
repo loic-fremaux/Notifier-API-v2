@@ -66,9 +66,7 @@ class FirebaseController extends Controller
             "message" => "key not found",
         ], 404);
 
-        $key->key = $request->key;
-        $key->save();
-        $key->refresh();
+        FirebaseKey::store($request);
 
         return response([
             "message" => "device successfully updated",
