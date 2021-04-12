@@ -40,6 +40,9 @@ class ApiToken extends Model
 
     public static function userFromToken(string $token): ?User
     {
+        if ($token === null) {
+            return null;
+        }
         $user_id = ApiToken::query()
             ->where("token", $token)
             ->get("user_id")
