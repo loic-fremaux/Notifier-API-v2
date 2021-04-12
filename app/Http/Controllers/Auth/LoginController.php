@@ -55,7 +55,7 @@ class LoginController extends Controller
             }
 
             Auth::loginUsingId($user->id);
-            return redirect("home");
+            return redirect("profile");
         } else {
             return $this->login($request);
         }
