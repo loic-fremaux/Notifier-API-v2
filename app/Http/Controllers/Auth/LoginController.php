@@ -45,7 +45,7 @@ class LoginController extends Controller
      */
     public function apiLogin(\Illuminate\Http\Request $request): mixed
     {
-        if ($request->has("api_token")) {
+        if ($request->has("api_key")) {
             $user = ApiToken::userFromToken($request->post("api_key"));
 
             if ($user === null) {
