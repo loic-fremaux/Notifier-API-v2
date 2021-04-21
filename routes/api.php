@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\ApiNotificationController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\FirebaseController;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +18,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(["api"])->group(function () {
+    Route::post('push', function (Request $request) {
+        return (new ApiNotificationController())->push($request);
+    })->name('api.push');
+
+    Route::post("register-device", function (Request $request) {
+        return (new FirebaseController())->registerDevice($request);
+    })->name("api.register");
+
+    Route::post("update-device", function (Request $request) {
+        return (new FirebaseController())->updateDevice($request);
+    })->name("api.update");
+});
+
+Route::middleware(["web"])->group(function () {
+    Route::post('login', function (Request $request) {
+        return (new LoginController())->apiLogin($request);
+    })->name('api.login')
+        ->withoutMiddleware(VerifyCsrfToken::class);
 });
