@@ -56,7 +56,7 @@
                         <a class="nav-link" href="{{ route('register') }}">{{ __('auth.create') }}</a>
                     </div>
                 @else
-                    <div class="nav-item dropdown active">
+                    <div class="nav-item dropdown active float-end">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
