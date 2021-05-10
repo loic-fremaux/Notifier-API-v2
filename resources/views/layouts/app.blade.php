@@ -51,14 +51,12 @@
                 </ul>
 
                 @guest
-                    <li class="nav-item">
+                    <div class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('auth.login') }}</a>
-                    </li>
-                    <li class="nav-item active">
                         <a class="nav-link" href="{{ route('register') }}">{{ __('auth.create') }}</a>
-                    </li>
+                    </div>
                 @else
-                    <li class="nav-item dropdown active">
+                    <div class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
@@ -79,7 +77,7 @@
                                 </form>
                             </li>
                         </ul>
-                    </li>
+                    </div>
                 @endguest
             </div>
         </div>
