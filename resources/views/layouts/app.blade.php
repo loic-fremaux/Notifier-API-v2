@@ -23,7 +23,8 @@
 <div id="app" class="container-lg">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name') }}</a>
@@ -49,7 +50,7 @@
                     @endauth
                 </ul>
 
-                <ul class="navbar-nav ml-md-auto">
+                <ul class="navbar-nav float-end">
                     @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('auth.login') }}</a>
@@ -77,7 +78,7 @@
                         </li>
                     @endguest
                 </ul>
-        </div>
+            </div>
         </div>
     </nav>
 
