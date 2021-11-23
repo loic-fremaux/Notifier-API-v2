@@ -11,14 +11,16 @@ class NotificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected string $title, $body;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $title, string $body)
     {
-        //
+        $this->title = $title;
+        $this->body = $body;
     }
 
     /**
@@ -29,6 +31,6 @@ class NotificationEmail extends Mailable
     public function build()
     {
         return $this->from('notifier@supervisor.lfremaux.fr', 'Notifier')
-            ->html('salut salut');
+            ->view('notifications::email', ['title' => $this->title, 'body'=> $this->body]);
     }
 }
