@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotificationEmail;
 use App\Models\Service;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -9,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ApiNotificationController extends Controller
 {
@@ -48,6 +50,8 @@ class ApiNotificationController extends Controller
                 "message" => "provided api keys doesn't belong to an user in the service",
             ], 403);
         }
+
+        Mail::to($request->user())->send(new NotificationEmail());
 
         return $this->sendPush($service->users()->get(), $request);
     }
