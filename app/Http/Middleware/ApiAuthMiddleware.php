@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\ApiToken;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class ApiAuthMiddleware
     public function handle(Request $request, Closure $next): mixed
     {
         if ($request->has("api_key")) {
-            $user = ApiToken::userFromToken($request->post("api_key"));
+            $user = User::fromToken($request->post("api_key"));
 
             if ($user === null) {
                 return response([

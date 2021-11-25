@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->api_token;
     }
 
+    public static function fromToken(string $token): User
+    {
+        return User::where('api_token', $token)->first();
+    }
+
     public function services()
     {
         return $this->belongsToMany('App\Models\Service', 'service_members', 'user_id', 'service_id');
