@@ -51,7 +51,7 @@ class User extends Authenticatable
         return $this->api_token;
     }
 
-    public static function fromToken(string $token): User
+    public static function fromToken(string $token): ?User
     {
         return User::where('api_token', $token)->first();
     }

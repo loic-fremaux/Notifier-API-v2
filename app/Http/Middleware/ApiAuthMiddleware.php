@@ -23,6 +23,10 @@ class ApiAuthMiddleware
             $user = User::fromToken($request->post("api_key"));
 
             if ($user === null) {
+                $user = ApiToken::userFromToken($request->post("api_key"));
+            }
+
+            if ($user === null) {
                 return response([
                     "message" => "access denied",
                 ], 403);
