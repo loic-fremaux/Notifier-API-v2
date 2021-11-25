@@ -6,7 +6,7 @@
             Identifiant
         </dt>
         <dd>
-            loic.fremaux1@gmail.com
+            {{ Auth::user()->email }}
         </dd>
         <dt>
             Clé d'API
