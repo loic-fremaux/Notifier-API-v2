@@ -51,7 +51,9 @@ class ApiNotificationController extends Controller
             ], 403);
         }
 
-        Mail::to($request->user())->send(new NotificationEmail($request->input('title'), $request->input('body')));
+        foreach ($service->users()->get() as $user) {
+            Mail::to($user)->send(new NotificationEmail($request->input('title'), $request->input('body')));
+        }
 
         return $this->sendPush($service->users()->get(), $request);
     }
