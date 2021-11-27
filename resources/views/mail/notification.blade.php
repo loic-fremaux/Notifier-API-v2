@@ -9,6 +9,7 @@
 </head>
 <body>
     <h1>{{ $title }}</h1>
+    <p>At {{ now('Europe/Paris')->toDateTimeString() }}</p>
     <p>{{ $body }}</p>
 </body>
 </html>
