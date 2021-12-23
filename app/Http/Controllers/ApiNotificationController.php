@@ -23,13 +23,13 @@ class ApiNotificationController extends Controller
 
     public function push(Request $request): Application|ResponseFactory|Response|JsonResponse
     {
-        if ($request->input('service_key') === null) {
+        if ($request->input('service_key') === null && $request->header('service_key') === null) {
             return response()->json([
                 "message" => "service not found",
             ], 404);
         }
 
-        $service = Service::fromApiKey($request->input('service_key'));
+        $service = Service::fromApiKey($request->input('service_key') ?? $request->header('service_key'));
 
         if ($service === null) {
             return response([
