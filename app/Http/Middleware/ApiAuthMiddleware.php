@@ -5,21 +5,33 @@ namespace App\Http\Middleware;
 use App\Models\ApiToken;
 use App\Models\User;
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use http\Client\Request;
 
 class ApiAuthMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
      * @param \Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        if ($request->has("api_key")) {
+        if ($request->getHeader("Authorization") != null) {
+            $bearer = substr($request->getHeader("Authorization")->toString(), 7);
+        }
+
+        if ($bearer) {
+            $user = User::fromToken($bearer);
+
+            if ($user === null) {
+                return response([
+                    "message" => "access denied",
+                ], 403);
+            }
+
+            Auth::onceUsingId($user->id);
+        } else if ($request->has("api_key")) {
             $user = User::fromToken($request->post("api_key"));
 
             if ($user === null) {
