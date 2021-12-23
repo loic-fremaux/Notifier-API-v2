@@ -12,6 +12,7 @@ class ApiAuthMiddleware
 
     public function handle(Request $request, Closure $next): mixed
     {
+        $bearer = null;
         if ($request->header("Authorization") != null) {
             $bearer = substr($request->header("Authorization")->toString(), 7);
         }
