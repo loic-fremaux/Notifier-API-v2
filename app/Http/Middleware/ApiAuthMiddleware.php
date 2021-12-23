@@ -5,16 +5,11 @@ namespace App\Http\Middleware;
 use App\Models\ApiToken;
 use App\Models\User;
 use Closure;
-use http\Client\Request;
+use Illuminate\Http\Request;
 
 class ApiAuthMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param \Closure $next
-     * @return mixed
-     */
+
     public function handle(Request $request, Closure $next): mixed
     {
         if ($request->getHeader("Authorization") != null) {
