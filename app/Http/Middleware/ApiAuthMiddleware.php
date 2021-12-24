@@ -15,7 +15,7 @@ class ApiAuthMiddleware
     {
         $bearer = null;
         if ($request->header("Authorization") != null) {
-            $bearer = substr($request->header("Authorization")->toString(), 7);
+            $bearer = substr($request->header("Authorization"), 7);
         }
 
         if ($bearer) {
