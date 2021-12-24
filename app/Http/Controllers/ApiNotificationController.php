@@ -52,7 +52,7 @@ class ApiNotificationController extends Controller
         }
 
         foreach ($service->users()->get() as $user) {
-            Mail::to($user)->send(new NotificationEmail($request->input('title') ?? 'ALERTE', $request->input('body') ?? $request->message));
+            Mail::to($user)->send(new NotificationEmail($request->input('title') ?? 'ALERTE', $request->input('body') ?? $request->getContent()));
         }
 
         return $this->sendPush($service->users()->get(), $request);
@@ -69,7 +69,7 @@ class ApiNotificationController extends Controller
             "notification" =>
                 [
                     "title" => $request->input('title') ?? 'ALERTE',
-                    "body" => $request->input('body') ?? $request->message,
+                    "body" => $request->input('body') ?? $request->getContent(),
                     "icon" => $request->input('icon')
                 ],
         ];
